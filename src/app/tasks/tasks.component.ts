@@ -1,32 +1,15 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { TaskComponent } from './task/task.component';
-import { NewTaskComponent } from './new-task/new-task.component';
-import { type NewTaskData } from './task/task.model';
-import { TasksService } from './tasks.service';
+import { Task } from './task/task.model';
 
 @Component({
   selector: 'app-tasks',
-  standalone: false,
-  //imports: [TaskComponent, NewTaskComponent],
+  standalone: true,
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css',
+  imports: [TaskComponent],
 })
 export class TasksComponent {
-  @Input({ required: true }) name!: string;
-  @Input({ required: true }) userId!: string;
-  isAddingTask = false;
-
-  constructor(private tasksService: TasksService) {}
-
-  get selectedUserTasks() {
-    return this.tasksService.getUserTasks(this.userId);
-  }
-
-  onStartAddTask() {
-    this.isAddingTask = true;
-  }
-
-  onCloseAddTask() {
-    this.isAddingTask = false;
-  }
+  userTasks: Task[] = [];
 }
